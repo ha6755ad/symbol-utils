@@ -2,7 +2,7 @@ import axios from 'axios';
 import {_get} from './dash-utils';
 import {detectIncognito} from './incognito';
 export * from './domain-handler';
-import {getResult} from 'ua-parser-js';
+import {UAParser} from 'ua-parser-js';
 
 export type DeviceObj = {
     name: string,
@@ -32,18 +32,20 @@ export const returnIp = async () => {
 
 
 export const getPlatform = (userAgentString?:string):DeviceObj => {
-    const p =  getResult(userAgentString || navigator.userAgent);
-    const {browser, device: { model, vendor, type }, product, os: {name}} = p;
+    const parser = new UAParser();
+    if(userAgentString) parser.setUA(userAgentString);
+    const p = parser.getResult();
+    const {browser, device: { model, vendor, type }, os: {name}} = p;
     const screenWidth = screen.width;
     const touch = isTouch();
     const {isPrivate} = detectIncognito();
     return {
-        name:browser.name,
-        manufacturer:model,
+        name:browser.name || '',
+        manufacturer:vendor,
         vendor,
         type,
-        product,
-        osName: name,
+        product:model || '',
+        osName: name || '',
         screenWidth,
         touch,
         incognito:isPrivate
