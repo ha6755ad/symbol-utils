@@ -33,12 +33,15 @@ type PlatformOptions = {
     log?: boolean
 }
 
-export const getPlatform = (userAgentString?:string, options?:PlatformOptions):DeviceObj => {
+export const getPlatform = (userAgentString?:string|undefined|null, options?:PlatformOptions):DeviceObj => {
     const { log } = options || {};
     if(log) console.log('getting platform');
     const parser = new UAParser();
     if(log) console.log('ua parser', parser, userAgentString);
-    if(userAgentString) parser.setUA(userAgentString);
+    if(userAgentString){
+        if(log) console.log('received ua string', userAgentString);
+        parser.setUA(userAgentString);
+    }
     const p = parser.getResult();
     if(log) console.log('got parser result', p);
     const {browser, device: { model, vendor, type }, os: {name}} = p;
@@ -80,7 +83,7 @@ export const getDeviceDetails = (deviceString?: string | null, options?:Platform
     else return getPlatform(undefined, options);
 };
 
-export const deviceString = async (device?: DeviceObj | null) => {
+export const deviceString = (device?: DeviceObj | null) => {
     const d = device ? device : getDeviceDetails();
     const mfr = d.manufacturer ? d.manufacturer : ''
     const product = d.product ? d.product : d.touch ? 'touch-screen' : 'computer';
