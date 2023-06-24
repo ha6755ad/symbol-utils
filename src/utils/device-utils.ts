@@ -51,7 +51,7 @@ export const getPlatform = (userAgentString?:string|undefined|null, options?:Pla
     if(log) console.log('is touch? ', touch);
     const {isPrivate} = detectIncognito();
     if(log) console.log('is incognito?', isPrivate);
-    return {
+    const obj = {
         name:browser.name || '',
         manufacturer:vendor,
         vendor,
@@ -62,6 +62,8 @@ export const getPlatform = (userAgentString?:string|undefined|null, options?:Pla
         touch,
         incognito:isPrivate
     };
+    if(log) console.log('return device obj', obj);
+    return obj;
 };
 
 export const readDeviceString = (deviceString:string):DeviceObj => {
@@ -80,7 +82,11 @@ export const getDeviceDetails = (deviceString?: string | null, options?:Platform
     const { log } = options || {};
     if(log) console.log('get device details', deviceString);
     if (deviceString) return readDeviceString(deviceString);
-    else return getPlatform(options?.ua, {log});
+    else {
+        const platform =  getPlatform(options?.ua, {log});
+        if(log) console.log('got platform ?', platform);
+        return platform;
+    }
 };
 
 export const deviceString = (device?: DeviceObj | null) => {
