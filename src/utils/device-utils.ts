@@ -76,11 +76,11 @@ export const readDeviceString = (deviceString:string):DeviceObj => {
 };
 
 
-export const getDeviceDetails = (deviceString?: string | null, options?:PlatformOptions):DeviceObj => {
+export const getDeviceDetails = (deviceString?: string | null, options?:PlatformOptions & { ua?: string }):DeviceObj => {
     const { log } = options || {};
     if(log) console.log('get device details', deviceString);
     if (deviceString) return readDeviceString(deviceString);
-    else return getPlatform(undefined, options);
+    else return getPlatform(options?.ua, {log});
 };
 
 export const deviceString = (device?: DeviceObj | null) => {
