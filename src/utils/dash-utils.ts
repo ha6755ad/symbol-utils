@@ -1,4 +1,4 @@
-import { get, set, omit, flat, isEmpty, isEqual } from 'radash';
+import { get, set, omit, flat, isEmpty, isEqual, pick } from 'radash';
 
 type PathTypes = string|(string|number)[];
 const stringifyPath = (path:PathTypes):string => {
@@ -20,6 +20,8 @@ export const _unset = <T>(obj: T, path: string|string[]):T => {
     const p = Array.isArray(path) ? path : [path];
     return omit(obj, p as never[]);
 };
+
+export const _pick = pick;
 
 export const _isnil = (check:any):boolean => {
     return check === null || typeof check === 'undefined';

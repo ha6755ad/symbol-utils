@@ -147,17 +147,19 @@ export class DragTracker {
     }
 
     addToObj(el:Element) {
-        if (el.id) {
+        if (el?.id) {
             this.idObj[el.id] = {el, rect: el.getBoundingClientRect()};
         }
     };
 
     addIdBasedRects(prefix:string) {
-        const elementList = document.querySelectorAll(`[id^=${prefix}]`);
-        if(elementList){
-            this.idObj = {};
-            elementList.forEach(a => this.addToObj(a));
-        }
+        if(prefix) {
+            const elementList = document.querySelectorAll(`[id^=${prefix}]`);
+            if (elementList) {
+                this.idObj = {};
+                elementList.forEach(a => this.addToObj(a));
+            }
+        } else console.log('no prefix provided to drag utils');
     }
 
     options = {log: this.log, el: this.el, eventHandler: this.eventHandler};
