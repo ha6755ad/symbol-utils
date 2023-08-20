@@ -6,3 +6,4 @@ export * from './utils/drag-utils';
 export * from './utils/base-64';
 export * from './utils/context-menu';
 export * from './utils/undo-redo';
+export * from './utils/detect-incognito';

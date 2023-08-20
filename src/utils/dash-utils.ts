@@ -3,7 +3,7 @@ import { get, set, omit, flat, isEmpty, isEqual, pick } from 'radash';
 type PathTypes = string|(string|number)[];
 const stringifyPath = (path:PathTypes):string => {
     let p = path;
-    if(Array.isArray(path)) p = path.map(a => typeof a === 'number' ? `[${a}]` : a).join('.');
+    if(Array.isArray(path)) p = path.map(a => typeof a === 'number' ? `[${a}]` : a).join('.').split('.[').join('[');
     return p as string;
 };
 
@@ -12,7 +12,7 @@ export const _get = <T, K>(value: T, path:PathTypes, defaultValue?: K|null):K|nu
 };
 
 export const _set = <T extends object, K>(initial:T, path:PathTypes, insert:K):T => {
-    return set(initial, stringifyPath(path), insert);
+    return set(initial || {}, stringifyPath(path), insert);
 };
 
 export const _unset = <T>(obj: T, path: string|string[]):T => {
