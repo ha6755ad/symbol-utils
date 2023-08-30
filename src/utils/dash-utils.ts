@@ -40,7 +40,10 @@ export type FlatItem<T> =  One<T>|Two<T>|(One<T>|Two<T>)[]|Three<T>|(One<T>|Two<
 export const _flattendeep = <T>(lists:FlatItem<T>):T[] => {
     return lists.flat(5) as T[];
 };
-export const _flatten = flat;
+export const _flatten = <T>(lists:Array<T|Array<T>>):T[] => {
+    if(lists.some(a => Array.isArray(a))) return flat(lists as T[][]);
+    else return lists as T[];
+};
 export const _isequal = isEqual;
 export const _isempty = isEmpty;
 
