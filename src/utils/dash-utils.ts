@@ -41,8 +41,7 @@ export const _flattendeep = <T>(lists:FlatItem<T>):T[] => {
     return lists.flat(5) as T[];
 };
 export const _flatten = <T>(lists:Array<T|Array<T>>):T[] => {
-    if(lists.some(a => Array.isArray(a))) return flat(lists as T[][]);
-    else return lists as T[];
+    return flat(lists.map(a => Array.isArray(a) ? a : [a]))
 };
 export const _isequal = isEqual;
 export const _isempty = isEmpty;
