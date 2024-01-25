@@ -6,7 +6,7 @@
     "**/*.test.ts"
   ],
   "excludeExternals": true,
-  "name": "Webnative SDK",
+  "name": "Symbol Utils",
   "out": "docs",
   "theme": "default"
 }

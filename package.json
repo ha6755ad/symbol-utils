@@ -1,6 +1,6 @@
 {
   "name": "symbol-syntax-utils",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "common useful utils for symbol projects",
   "source": "src/index.ts",
   "unpkg": "lib/index.umd.js",
